@@ -1,14 +1,14 @@
-use bevy::prelude::*;
-
 mod weapons;
-mod components;
-mod resources;
-mod systems;
-mod plugin;
-
 pub use weapons::*;
+
+mod components;
 pub use components::*;
+
+mod resources;
 pub use resources::*;
-pub use systems::*;
+
+mod plugin;
 pub use plugin::*;
+
+mod systems;
 

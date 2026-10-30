@@ -20,7 +20,7 @@ impl Plugin for InputPlugin {
     }
 }
 
-fn update_move_desktop(mut move_vec: ResMut<MovementVec>, kb: Res<ButtonInput<KeyCode>>) {
+pub(super) fn update_move_desktop(mut move_vec: ResMut<MovementVec>, kb: Res<ButtonInput<KeyCode>>) {
     let mut dir = Vec2::ZERO;
 
     if kb.pressed(KeyCode::KeyW) {

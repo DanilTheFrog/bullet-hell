@@ -1,5 +1,4 @@
 use bevy::prelude::*;
-use bevy::log;
 
 use crate::enemies::EnemiesPlugin;
 use crate::level::LevelPlugin;
@@ -11,6 +10,7 @@ mod level;
 mod player;
 mod enemies;
 mod weapons;
+mod combat;
 pub mod helpers;
 pub struct GamePlugin;
 

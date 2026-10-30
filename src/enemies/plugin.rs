@@ -1,6 +1,7 @@
 use bevy::prelude::*;
 
-use crate::enemies::{EnemySpawnTimer, systems::*};
+use super::systems::*;
+use super::resources::EnemySpawnTimer;
 
 pub struct EnemiesPlugin;
 

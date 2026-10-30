@@ -2,4 +2,4 @@ use bevy::{ecs::resource::Resource, time::Timer};
 
 
 #[derive(Resource)]
-pub struct EnemySpawnTimer(pub Timer);
+pub(super) struct EnemySpawnTimer(pub(super) Timer);

@@ -2,17 +2,17 @@ use bevy::{color::palettes::css::YELLOW, prelude::*};
 
 use crate::{player::Player, weapons::{Bullet, Weapons}};
 
-pub fn tick_weapons_cd(
+pub(super) fn tick_weapons_cd(
     mut weapons: ResMut<Weapons>,
     time: Res<Time> 
 ) {
     let delta = time.delta();
-    for mut w in weapons.weapons.iter_mut() {
+    for w in weapons.weapons.iter_mut() {
         w.cooldown_timer.tick(delta);
     }
 }
 
-pub fn fire(
+pub(super) fn fire(
     mut commands: Commands,
     weapons: Res<Weapons>,
     p: Single<&Transform, With<Player>>,

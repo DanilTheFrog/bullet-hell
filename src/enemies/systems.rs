@@ -2,14 +2,16 @@ use std::f32::consts::PI;
 
 use bevy::prelude::*;
 
-use crate::{common::Health, enemies::{Enemy, EnemySpawnTimer}, player::Player};
-
+use crate::common::prelude::*;
+use crate::player::Player;
+use super::{Enemy, resources::EnemySpawnTimer};
 
 pub fn spawn_enemy(mut commands: Commands, assets: Res<AssetServer>) {
     let img: Handle<Image> = assets.load("idle.png");
 
     commands.spawn((
         Enemy,
+        Team::Enemy,
         Health(10),
         Sprite {
             image: img,
@@ -72,6 +74,7 @@ pub fn spawn_enemies(
 
     commands.spawn((
         Enemy,
+        Team::Enemy,
         Health(10),
         Sprite {
             image: img,
