@@ -2,6 +2,8 @@ use std::process::exit;
 
 use bevy::prelude::*;
 
+use crate::common::prelude::*;
+
 #[derive(Resource)]
 pub struct MovementVec(pub Vec2);
 
@@ -16,7 +18,10 @@ impl Plugin for InputPlugin {
     fn build(&self, app: &mut App) {
         app.insert_resource(MovementVec(Vec2::default()));
         app.insert_resource(ActionVec(Vec2::default()));
-        app.add_systems(Update, update_move_desktop);
+        app.add_systems(Update,
+            update_move_desktop
+            .run_if(in_state(GameState::Running))
+            .in_set(GameSet::Input));
     }
 }
 

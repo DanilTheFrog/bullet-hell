@@ -1,5 +1,7 @@
 use bevy::prelude::*;
 
+use crate::combat::CombatPlugin;
+use crate::common::{CommonPlugin, prelude::*};
 use crate::enemies::EnemiesPlugin;
 use crate::level::LevelPlugin;
 use crate::player::PlayerPlugin;
@@ -16,10 +18,16 @@ pub struct GamePlugin;
 
 impl Plugin for GamePlugin {
     fn build(&self, app: &mut App) {
+        app.init_state::<GameState>();
+        app.init_state::<GameStage>();
+        app.configure_sets(Update, (GameSet::UiInput, GameSet::Input.run_if(in_state(GameState::Running))).chain());
+        app.configure_sets(FixedUpdate, (GameSet::Movement, GameSet::Combat, GameSet::Cleanup).run_if(in_state(GameState::Running)).chain());
+        app.add_plugins(CommonPlugin);
         app.add_plugins(LevelPlugin);
         app.add_plugins(PlayerPlugin);
         app.add_plugins(EnemiesPlugin);
         app.add_plugins(WeaponsPlugin);
+        app.add_plugins(CombatPlugin);
         app.add_systems(Startup, spawn_camera);
         app.add_systems(Update, scale_camera);
     }

@@ -14,8 +14,8 @@ fn main() {
                 })
             .set(ImagePlugin::default_nearest())
         )
-        .add_plugins(bevy_ecs_tilemap::TilemapPlugin)
-        .add_plugins(bullet_hell::helpers::tiled::TiledMapPlugin)
+        // .add_plugins(bevy_ecs_tilemap::TilemapPlugin)
+        // .add_plugins(bullet_hell::helpers::tiled::TiledMapPlugin)
         .add_plugins(GamePlugin)
         .run();
 }

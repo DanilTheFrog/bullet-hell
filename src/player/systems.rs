@@ -1,5 +1,4 @@
 use bevy::prelude::*;
-use crate::common::prelude::*;
 use super::components::*;
 use super::input::*;
 
@@ -8,19 +7,13 @@ pub(super) fn spawn_player(mut commands: Commands, assets: Res<AssetServer>) {
 
     commands.spawn((
         Player,
-        Team::Player,
-        Health(100),
+        Player::default_transform(),
         Sprite {
             image: img,
             color: Color::linear_rgb(0.5, 0.9, 0.5),
             rect: Some(Rect{max: Vec2 { x: 30.0, y: 32.0 },..Default::default()}),
             ..Default::default()
         },
-        Transform {
-            translation: Vec3 {z: 15.0, ..Default::default()},
-            scale: Vec3 { x: 5.0, y: 5.0, z: 5.0 },
-            ..Default::default()
-        }
     ));
 }
 

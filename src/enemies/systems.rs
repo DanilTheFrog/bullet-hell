@@ -11,8 +11,7 @@ pub fn spawn_enemy(mut commands: Commands, assets: Res<AssetServer>) {
 
     commands.spawn((
         Enemy,
-        Team::Enemy,
-        Health(10),
+        Velocity::default(),
         Sprite {
             image: img,
             color: Color::linear_rgb(0.9, 0.5, 0.5),
@@ -28,21 +27,31 @@ pub fn spawn_enemy(mut commands: Commands, assets: Res<AssetServer>) {
 }
 
 pub fn follow_player(
-    mut q: Query<&mut Transform, (With<Enemy>, Without<Player>)>,
+    mut q: Query<(&mut Velocity, &Speed, &Transform), (With<Enemy>, Without<Player>)>,
     p: Single<&Transform, (With<Player>, Without<Enemy>)>,
-    t: Res<Time>
 ) {
-    const SPEED: f32 = 100.0;
     let target = p.translation.truncate();
 
-    for mut e in q.iter_mut() {
-        let pos = e.translation.truncate();
-        let mut next = target - pos;
-        next = next.normalize_or_zero();
-        next = next * SPEED * t.delta_secs();
-        e.translation += next.extend(0.0);
+    for e in q.iter_mut() {
+        let vel = e.0.into_inner();
+        let speed = e.1;
+        let pos = e.2.translation.truncate();
+        let dir = (target - pos).normalize_or_zero();
+        let res_vel = dir * speed.0;
+        vel.0 = vel.0.lerp(res_vel, 0.8);
     }
 }
+
+// pub fn update_position(
+//     mut q: Query<(&mut Transform, &Velocity), With<Enemy>>,
+//     time: Res<Time>
+// ) {
+//     let delta = time.delta_secs();
+//     for e in q.iter_mut() {
+//         let (mut t, v) = e;
+//         t.translation += (v.0 * delta).extend(0.0);
+//     }
+// }
 
 pub fn tick(mut timer: ResMut<EnemySpawnTimer>, time: Res<Time>) {
     timer.0.tick(time.delta());
@@ -68,14 +77,13 @@ pub fn spawn_enemies(
 
     let mut pos = Vec2::new(x, y);
     pos = pos + center;
-    info!("{:?}", pos);
 
     let img: Handle<Image> = assets.load("idle.png");
 
     commands.spawn((
         Enemy,
-        Team::Enemy,
-        Health(10),
+        Velocity::default(),
+        Speed(120f32),
         Sprite {
             image: img,
             color: Color::linear_rgb(0.9, 0.5, 0.5),
@@ -83,9 +91,8 @@ pub fn spawn_enemies(
             ..Default::default()
         },
         Transform {
-            translation: pos.extend(10.0),
-            scale: Vec3 { x: 5.0, y: 5.0, z: 5.0 },
-            ..Default::default()
+            translation: pos.extend(Enemy::TRANSFORM_Z),
+            ..Enemy::default_transform()
         }
     ));
 

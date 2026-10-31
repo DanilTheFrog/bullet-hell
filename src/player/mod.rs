@@ -5,7 +5,7 @@ mod input;
 pub use input::*;
 
 mod resources;
-pub use resources::*;
+// pub use resources::*;
 
 mod components;
 pub use components::*;
