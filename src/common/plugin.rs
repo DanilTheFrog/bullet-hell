@@ -5,6 +5,6 @@ pub struct CommonPlugin;
 
 impl Plugin for CommonPlugin {
     fn build(&self, app: &mut App) {
-        app.add_systems(FixedUpdate, update_pos.run_if(in_state(GameState::Running)));
+        app.add_systems(FixedUpdate, (update_pos).chain().run_if(in_state(GameState::Running)));
     }
 }

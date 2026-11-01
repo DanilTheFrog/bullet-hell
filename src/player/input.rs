@@ -41,7 +41,7 @@ pub(super) fn update_move_desktop(mut move_vec: ResMut<MovementVec>, kb: Res<But
         dir.x += 1.0;
     }
 
-    if kb.just_pressed(KeyCode::Escape) {
+    if kb.just_pressed(KeyCode::KeyQ) {
         exit(0);
     }
 

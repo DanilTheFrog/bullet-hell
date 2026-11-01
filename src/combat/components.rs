@@ -19,3 +19,10 @@ impl Default for DamageValue {
         Self(3)
     }
 }
+
+
+impl From<i32> for DamageValue {
+    fn from(value: i32) -> Self {
+        Self(value)
+    }
+}
